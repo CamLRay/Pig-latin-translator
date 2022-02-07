@@ -8,15 +8,17 @@ return text.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g,"").toLowerCase();
 function pigLatin(text) {
   let textArray = text.split(" ");
   let pigArray = [];
-  textArray.forEach(element => {
-    if (element[0] === 'a' || element[0] === 'e' || element[0] === 'i' || element[0] === 'o' || element[0] === 'u') {
+  let vowels = [`a`, `e`, `i`, `o`, `u`];
+  
+  textArray.forEach(function(element) {
+    if (vowels.includes(element[0])) {
       pigArray.push(element + "way");
     } 
     else if (element.slice(0,2) === 'qu') {
       pigArray.push(element.slice(2)+"quay")
     }
     else {
-      pigLatinCons(text);
+      pigArray.push(pigLatinCons(element));
     }
   }); 
   return pigArray.join(" ");
@@ -29,16 +31,15 @@ function pigLatin(text) {
 //}
 
 function pigLatinCons(element){
-  let textArray = element.split(" ");
-  let vowels = [`a`, `e`, `i`, `o`, `u`];
-  let x = 0;
-  for (let char = 0; char <= textArray.length; char++){
-    if (!textArray){
-      x = element.indexOf(char);
+  let vowels = [`a`, `e`, `i`, `o`, `u`, `q`];
+  let pigLatinWord = "";
+    for (let index = 0; index <= element.length; index++){
+      if (vowels.includes(element[index])){
+      pigLatinWord = element.slice(index) + element.slice(0,index) + "ay";
       break;
+      }
     }
-  }
-  return element.slice(x) + element.slice(0,x) +"ay";
+  return pigLatinWord;
 } 
 
 console.log(pigLatinCons("skill"))
